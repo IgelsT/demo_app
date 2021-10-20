@@ -18,9 +18,9 @@ class PopularProducts extends StatelessWidget {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              // debugPrint('tap to card');
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const DetailPage()));
+              debugPrint('Detail');
+              // Navigator.push(context,
+              //     MaterialPageRoute(builder: (context) => const DetailPage()));
             },
             child: SizedBox(
               width: 100,

@@ -1,5 +1,6 @@
 import 'package:demo_app/MainPage/main_card.dart';
 import 'package:demo_app/MainPage/popular.dart';
+import 'package:demo_app/MainPage/top_bar.dart';
 import 'package:demo_app/data.dart';
 // import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
@@ -23,12 +24,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Sizer(builder: (context, orientation, deviceType) {
-      // print(orientation);
       return MaterialApp(
-        // title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        debugShowCheckedModeBanner: false,
         home: Page(),
       );
     });
@@ -68,49 +65,62 @@ class _PageState extends State<Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.amber,
-        // leading: IconButton(
-        //   icon: const Icon(Icons.arrow_back_ios),
-        //   onPressed: () {},
-        // ),
-        title: const Text("Hello world"),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+      // appBar: AppBar(
+      //   elevation: 0,
+      //   backgroundColor: Colors.amber,
+      //   // leading: IconButton(
+      //   //   icon: const Icon(Icons.arrow_back_ios),
+      //   //   onPressed: () {},
+      //   // ),
+      //   title: const Text("Hello world"),
+      // ),
+      body: SafeArea(
+        child: Stack(
           children: [
-            mainTitle('Популярные'),
-            const PopularProducts(),
-            const SizedBox(height: 10),
-            SizedBox(
-              height: 35,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+            SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ChoiceChip(
-                      label: const Text("Все"),
-                      selected: _teig[0],
-                      onSelected: (bool value) {
-                        selectTeig(0);
-                      }),
-                  ChoiceChip(
-                      label: const Text('Тонкое тесто'),
-                      selected: _teig[1],
-                      onSelected: (bool value) {
-                        selectTeig(1);
-                      }),
-                  ChoiceChip(
-                      label: const Text('Толстое тесто'),
-                      selected: _teig[2],
-                      onSelected: (bool value) {
-                        selectTeig(2);
-                      }),
+                  const SizedBox(
+                    height: 60,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: mainTitle('Популярные'),
+                  ),
+                  const PopularProducts(),
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    height: 35,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        ChoiceChip(
+                            label: const Text("Все"),
+                            selected: _teig[0],
+                            onSelected: (bool value) {
+                              selectTeig(0);
+                            }),
+                        ChoiceChip(
+                            label: const Text('Тонкое тесто'),
+                            selected: _teig[1],
+                            onSelected: (bool value) {
+                              selectTeig(1);
+                            }),
+                        ChoiceChip(
+                            label: const Text('Толстое тесто'),
+                            selected: _teig[2],
+                            onSelected: (bool value) {
+                              selectTeig(2);
+                            }),
+                      ],
+                    ),
+                  ),
+                  MainCard(_productList),
                 ],
               ),
             ),
-            MainCard(_productList),
+            const TopBar(),
           ],
         ),
       ),

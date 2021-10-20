@@ -8,7 +8,8 @@ const double _outCardSpacing = 8.0;
 const double _inCardSpacing = 8.0;
 const double _titleHeight = 44.0;
 const double _infoHeight = 56.0;
-const double _actionHeight = 44.0;
+const double _priceHeight = 15.0;
+const double _actionHeight = 40.0;
 
 // ignore: must_be_immutable
 class MainCard extends StatefulWidget {
@@ -27,27 +28,26 @@ class _MainCardState extends State<MainCard> {
 
     final int _crossAxisCount =
         MediaQuery.of(context).orientation == Orientation.landscape ? 3 : 2;
-    final double _itemWidth =
-        (size.width - ((_crossAxisCount - 1) * _outCardSpacing)) /
-            _crossAxisCount;
+    final double _itemWidth = (size.width -
+            (_outCardSpacing * 2) -
+            ((_crossAxisCount - 1) * _outCardSpacing)) /
+        _crossAxisCount;
     final double _itemHeight = _inCardSpacing +
-        _itemWidth -
-        _inCardSpacing * 2 +
-        _inCardSpacing +
+        (_itemWidth - _inCardSpacing * 2) +
         _titleHeight +
-        _inCardSpacing +
         _infoHeight +
         _inCardSpacing +
-        _actionHeight +
+        _priceHeight +
         _inCardSpacing +
-        2;
+        _actionHeight +
+        _inCardSpacing;
     final double _childAspectRatio = _itemWidth / _itemHeight;
     // print(MediaQuery.of(context).orientation);
     // print(
-    //     'width ${size.width}, item width ${_itemWidth}, ratio ${_childAspectRatio}');
+    //     'width ${size.width}, item width ${_itemWidth}, item height ${_itemHeight}, ratio ${_childAspectRatio}');
 
     return Container(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(_outCardSpacing),
       child: GridView.builder(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
@@ -80,8 +80,9 @@ class _ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const DetailPage()));
+        // Navigator.push(context,
+        //     MaterialPageRoute(builder: (context) => const DetailPage()));
+        print('Detail');
       },
       child: Card(
         elevation: 5,
@@ -108,6 +109,18 @@ class _ProductCard extends StatelessWidget {
                       child: mainTitle(info.title))),
               SizedBox(
                   height: _infoHeight, child: smallText(info.shortDescription)),
+              const SizedBox(height: _inCardSpacing),
+              SizedBox(
+                height: _priceHeight,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(info.price.toString() + ' \u20bd'),
+                    Text(info.weight.toString() + ' г.'),
+                  ],
+                ),
+              ),
+              // const SizedBox(height: _inCardSpacing),
               SizedBox(
                 height: _actionHeight,
                 child: Row(
@@ -118,22 +131,30 @@ class _ProductCard extends StatelessWidget {
                     LikeIcon(
                       info.id,
                     ),
-
+                    OutlinedButton(
+                      style: TextButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                          minimumSize: const Size(80, 24),
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          alignment: Alignment.center),
+                      onPressed: () {
+                        print('To cadr');
+                      },
+                      child: Text(
+                        'В корзину',
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                    )
                     // IconButton(
+                    //   padding: EdgeInsets.zero,
                     //   onPressed: () {
                     //     print('cart');
                     //   },
-                    //   icon: Icon(Icons.add_shopping_cart),
+                    //   icon: Icon(Icons.shopping_cart),
                     //   iconSize: 30,
                     // ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(info.price.toString() + ' \u20bd'),
-                        Text(info.weight.toString() + ' г.'),
-                      ],
-                    ),
                   ],
                 ),
               ),
