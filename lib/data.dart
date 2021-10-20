@@ -1,4 +1,5 @@
 class ProductInfo {
+  int id;
   String title;
   String shortDescription;
   String description;
@@ -10,7 +11,8 @@ class ProductInfo {
   bool isLiked;
 
   ProductInfo(
-      {this.title = '',
+      {this.id = 0,
+      this.title = '',
       this.shortDescription = '',
       this.description = '',
       this.mainPicture = '',
@@ -23,6 +25,7 @@ class ProductInfo {
 
 List<ProductInfo> productList = [
   ProductInfo(
+    id: 1,
     title: 'Маргарита',
     shortDescription: 'Пицца соус, сыр Моцарелла, специи.',
     description:
@@ -35,6 +38,7 @@ List<ProductInfo> productList = [
     isLiked: true,
   ),
   ProductInfo(
+    id: 2,
     title: 'С ветчиной и грибами',
     shortDescription:
         'Пицца соус, сыр Моцарелла, Ветчина, грибы шампиньоны, укроп.',
@@ -48,6 +52,7 @@ List<ProductInfo> productList = [
     isLiked: false,
   ),
   ProductInfo(
+    id: 3,
     title: 'Охотничья',
     shortDescription:
         'Пицца соус, чеснок, сыр Моцарелла, огурцы маринованные, колбаски Охотничьи полукопченые, болгарский перец, укроп.',
@@ -63,6 +68,7 @@ List<ProductInfo> productList = [
 
 // ------------------------
   ProductInfo(
+    id: 4,
     title: 'Маргарита',
     shortDescription: 'Пицца соус, сыр Моцарелла, специи.',
     description:
@@ -75,6 +81,7 @@ List<ProductInfo> productList = [
     isLiked: false,
   ),
   ProductInfo(
+    id: 5,
     title: 'С ветчиной и грибами',
     shortDescription:
         'Пицца соус, сыр Моцарелла, Ветчина, грибы шампиньоны, укроп.',
@@ -88,6 +95,7 @@ List<ProductInfo> productList = [
     isLiked: false,
   ),
   ProductInfo(
+    id: 6,
     title: 'Охотничья',
     shortDescription:
         'Пицца соус, чеснок, сыр Моцарелла, огурцы маринованные, колбаски Охотничьи полукопченые, болгарский перец, укроп.',
@@ -103,6 +111,7 @@ List<ProductInfo> productList = [
 
 // ------------------------
   ProductInfo(
+    id: 7,
     title: 'Маргарита',
     shortDescription: 'Пицца соус, сыр Моцарелла, специи.',
     description:
@@ -115,6 +124,7 @@ List<ProductInfo> productList = [
     isLiked: false,
   ),
   ProductInfo(
+    id: 8,
     title: 'С ветчиной и грибами',
     shortDescription:
         'Пицца соус, сыр Моцарелла, Ветчина, грибы шампиньоны, укроп.',
@@ -128,6 +138,7 @@ List<ProductInfo> productList = [
     isLiked: false,
   ),
   ProductInfo(
+    id: 9,
     title: 'Охотничья',
     shortDescription:
         'Пицца соус, чеснок, сыр Моцарелла, огурцы маринованные, колбаски Охотничьи полукопченые, болгарский перец, укроп.',
@@ -143,3 +154,15 @@ List<ProductInfo> productList = [
 ];
 
 List<ProductInfo> allItems = [];
+
+bool getIsLiked(id) {
+  int item = productList.indexWhere((el) => el.id == id);
+  if (item == -1) return false;
+  return productList[item].isLiked;
+}
+
+int getLikes(id) {
+  int item = productList.indexWhere((el) => el.id == id);
+  if (item == -1) return 0;
+  return productList[item].likes;
+}

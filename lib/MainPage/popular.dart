@@ -11,7 +11,7 @@ class PopularProducts extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsetsDirectional.only(top: 0),
-      height: 20.h,
+      height: 160,
       child: ListView.builder(
         itemCount: productList.length,
         scrollDirection: Axis.horizontal,
@@ -24,6 +24,7 @@ class PopularProducts extends StatelessWidget {
             },
             child: SizedBox(
               width: 100,
+              // height: 250,
               child: Card(
                 elevation: 5,
                 shape: RoundedRectangleBorder(

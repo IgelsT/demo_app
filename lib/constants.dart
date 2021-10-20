@@ -3,9 +3,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 Widget mainTitle(String t) {
   return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 8),
+    padding: const EdgeInsets.symmetric(vertical: 0),
     child: Text(
       t,
+      textAlign: TextAlign.center,
       style: GoogleFonts.arimo(
         fontSize: 15,
         fontWeight: FontWeight.w800,

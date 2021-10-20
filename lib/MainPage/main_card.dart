@@ -4,6 +4,12 @@ import 'package:demo_app/constants.dart';
 import 'package:demo_app/data.dart';
 import 'package:flutter/material.dart';
 
+const double _outCardSpacing = 8.0;
+const double _inCardSpacing = 8.0;
+const double _titleHeight = 44.0;
+const double _infoHeight = 56.0;
+const double _actionHeight = 44.0;
+
 // ignore: must_be_immutable
 class MainCard extends StatefulWidget {
   List<ProductInfo> prdList = [];
@@ -19,15 +25,27 @@ class _MainCardState extends State<MainCard> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    const double _crossAxisSpacing = 8, _mainAxisSpacing = 8;
     final int _crossAxisCount =
         MediaQuery.of(context).orientation == Orientation.landscape ? 3 : 2;
     final double _itemWidth =
-        (size.width - ((_crossAxisCount - 1) * _crossAxisSpacing)) /
+        (size.width - ((_crossAxisCount - 1) * _outCardSpacing)) /
             _crossAxisCount;
-    const double _itemHeight = 300;
+    final double _itemHeight = _inCardSpacing +
+        _itemWidth -
+        _inCardSpacing * 2 +
+        _inCardSpacing +
+        _titleHeight +
+        _inCardSpacing +
+        _infoHeight +
+        _inCardSpacing +
+        _actionHeight +
+        _inCardSpacing +
+        2;
     final double _childAspectRatio = _itemWidth / _itemHeight;
     // print(MediaQuery.of(context).orientation);
+    // print(
+    //     'width ${size.width}, item width ${_itemWidth}, ratio ${_childAspectRatio}');
+
     return Container(
       padding: const EdgeInsets.all(8.0),
       child: GridView.builder(
@@ -36,15 +54,15 @@ class _MainCardState extends State<MainCard> {
         itemCount: widget.prdList.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: _crossAxisCount,
-          crossAxisSpacing: _crossAxisSpacing,
-          mainAxisSpacing: _mainAxisSpacing,
+          crossAxisSpacing: _outCardSpacing,
+          mainAxisSpacing: _outCardSpacing,
           childAspectRatio: _childAspectRatio,
         ),
         itemBuilder: (
           context,
           index,
         ) {
-          return _ProductCard(info: widget.prdList[index]);
+          return _ProductCard(info: widget.prdList[index], width: _itemWidth);
         },
       ),
     );
@@ -54,8 +72,9 @@ class _MainCardState extends State<MainCard> {
 // ignore: must_be_immutable
 class _ProductCard extends StatelessWidget {
   ProductInfo info;
-
-  _ProductCard({required this.info, Key? key}) : super(key: key);
+  double width;
+  _ProductCard({required this.info, required this.width, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -67,44 +86,46 @@ class _ProductCard extends StatelessWidget {
       child: Card(
         elevation: 5,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: BorderRadius.circular(_inCardSpacing),
         ),
         child: Container(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(_inCardSpacing),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset(
-                info.mainPicture,
-                fit: BoxFit.fill,
+              SizedBox(
+                width: width - _inCardSpacing * 2,
+                height: width - _inCardSpacing * 2,
+                child: Image.asset(
+                  info.mainPicture,
+                  fit: BoxFit.fitHeight,
+                ),
               ),
               SizedBox(
-                height: 50.0,
-                child: Center(child: mainTitle(info.title)),
-              ),
-              smallText(info.shortDescription),
-              Expanded(
+                  height: _titleHeight,
+                  child: Align(
+                      alignment: Alignment.center,
+                      child: mainTitle(info.title))),
+              SizedBox(
+                  height: _infoHeight, child: smallText(info.shortDescription)),
+              SizedBox(
+                height: _actionHeight,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Row(
-                      children: [
-                        LikeIcon(info.isLiked),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        mainTitle(info.likes.toString()),
-                      ],
+                    LikeIcon(
+                      info.id,
                     ),
-                    IconButton(
-                      onPressed: () {
-                        print('cart');
-                      },
-                      icon: Icon(Icons.add_shopping_cart),
-                      iconSize: 30,
-                    ),
+
+                    // IconButton(
+                    //   onPressed: () {
+                    //     print('cart');
+                    //   },
+                    //   icon: Icon(Icons.add_shopping_cart),
+                    //   iconSize: 30,
+                    // ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -112,7 +133,7 @@ class _ProductCard extends StatelessWidget {
                         Text(info.price.toString() + ' \u20bd'),
                         Text(info.weight.toString() + ' г.'),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
