@@ -17,6 +17,7 @@ class _LikeIconState extends State<LikeIcon> {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(
           height: 24,
@@ -36,20 +37,19 @@ class _LikeIconState extends State<LikeIcon> {
                   child: IconButton(
                     padding: EdgeInsets.zero,
                     onPressed: () {
-                      print('like');
                       toggleLike(widget.id);
                       setState(() {});
                     },
                     iconSize: 20,
                     color: (getIsLiked(widget.id)) ? Colors.red : Colors.white,
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.favorite,
                     ),
                   )),
             ],
           ),
         ),
-        SizedBox(width: 5),
+        const SizedBox(width: 5),
         smallTitle(getLikes(widget.id).toString())
       ],
     );

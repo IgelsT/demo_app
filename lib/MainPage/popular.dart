@@ -2,7 +2,7 @@ import 'package:demo_app/DetailPage/detail_page.dart';
 import 'package:demo_app/constants.dart';
 import 'package:demo_app/data.dart';
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
+// import 'package:sizer/sizer.dart';
 
 class PopularProducts extends StatelessWidget {
   const PopularProducts({Key? key}) : super(key: key);
@@ -18,9 +18,7 @@ class PopularProducts extends StatelessWidget {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              debugPrint('Detail');
-              // Navigator.push(context,
-              //     MaterialPageRoute(builder: (context) => const DetailPage()));
+              showDetail(productList[index].id, context);
             },
             child: SizedBox(
               width: 100,

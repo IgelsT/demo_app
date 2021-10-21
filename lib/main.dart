@@ -1,6 +1,7 @@
+import 'package:demo_app/Components/main_template.dart';
 import 'package:demo_app/MainPage/main_card.dart';
 import 'package:demo_app/MainPage/popular.dart';
-import 'package:demo_app/MainPage/top_bar.dart';
+import 'package:demo_app/Components/top_bar.dart';
 import 'package:demo_app/data.dart';
 // import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
@@ -68,57 +69,45 @@ class _PageState extends State<Page> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 60,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: mainTitle('Популярные'),
-                  ),
-                  const PopularProducts(),
-                  const SizedBox(height: 10),
-                  SizedBox(
-                    height: 35,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        ChoiceChip(
-                            label: const Text("Все"),
-                            selected: _teig[0],
-                            onSelected: (bool value) {
-                              selectTeig(0);
-                            }),
-                        ChoiceChip(
-                            label: const Text('Тонкое тесто'),
-                            selected: _teig[1],
-                            onSelected: (bool value) {
-                              selectTeig(1);
-                            }),
-                        ChoiceChip(
-                            label: const Text('Толстое тесто'),
-                            selected: _teig[2],
-                            onSelected: (bool value) {
-                              selectTeig(2);
-                            }),
-                      ],
-                    ),
-                  ),
-                  MainCard(_productList),
-                ],
-              ),
-            ),
-            TopBar(),
-          ],
+    return MainTemplate(
+        body: SingleChildScrollView(
+            child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8),
+          child: mainTitle('Популярные'),
         ),
-      ),
-    );
+        const PopularProducts(),
+        const SizedBox(height: 10),
+        SizedBox(
+          height: 35,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ChoiceChip(
+                  label: const Text("Все"),
+                  selected: _teig[0],
+                  onSelected: (bool value) {
+                    selectTeig(0);
+                  }),
+              ChoiceChip(
+                  label: const Text('Тонкое тесто'),
+                  selected: _teig[1],
+                  onSelected: (bool value) {
+                    selectTeig(1);
+                  }),
+              ChoiceChip(
+                  label: const Text('Толстое тесто'),
+                  selected: _teig[2],
+                  onSelected: (bool value) {
+                    selectTeig(2);
+                  }),
+            ],
+          ),
+        ),
+        MainCard(_productList),
+      ],
+    )));
   }
 }

@@ -171,8 +171,13 @@ class CartController extends GetxController {
   var totalPrice = 0;
   var totalCount = 0;
 
+  bool isInCart(id) {
+    int cartIdx = cartList.indexWhere((el) => el.id == id);
+    if (cartIdx == -1) return false;
+    return true;
+  }
+
   addToCart(id) {
-    print('add to cart ${id}');
     int itemIdx = productList.indexWhere((el) => el.id == id);
     if (itemIdx != -1) {
       int cartIdx = cartList.indexWhere((el) => el.id == id);
@@ -186,6 +191,14 @@ class CartController extends GetxController {
     totalPrice = cartList.fold(0, (summ, el) => summ + el.count * el.price);
     totalCount = cartList.fold(0, (summ, el) => summ + el.count);
     update();
+  }
+}
+
+ProductInfo getProduct(id) {
+  try {
+    return productList.firstWhere((el) => el.id == id);
+  } catch (e) {
+    rethrow;
   }
 }
 

@@ -1,4 +1,5 @@
-import 'package:demo_app/MainPage/like_icon.dart';
+import 'package:demo_app/DetailPage/detail_page.dart';
+import 'package:demo_app/Components/like_icon.dart';
 import 'package:demo_app/constants.dart';
 import 'package:demo_app/data.dart';
 import 'package:flutter/material.dart';
@@ -82,9 +83,7 @@ class _ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigator.push(context,
-        //     MaterialPageRoute(builder: (context) => const DetailPage()));
-        print('Detail');
+        showDetail(info.id, context);
       },
       child: Card(
         elevation: 5,
@@ -117,7 +116,7 @@ class _ProductCard extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(info.price.toString() + ' \u20bd'),
+                    smallPrice(info.price.toString()),
                     Text(info.weight.toString() + ' г.'),
                   ],
                 ),
@@ -133,30 +132,29 @@ class _ProductCard extends StatelessWidget {
                     LikeIcon(
                       info.id,
                     ),
-                    OutlinedButton(
-                      style: TextButton.styleFrom(
-                          padding: EdgeInsets.zero,
-                          minimumSize: const Size(80, 24),
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          alignment: Alignment.center),
-                      onPressed: () {
-                        _cartController.addToCart(info.id);
-                      },
-                      child: Text(
-                        'В корзину',
-                        style: TextStyle(
-                          color: Colors.black,
+                    GetBuilder<CartController>(builder: (controller) {
+                      return OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                            padding: EdgeInsets.zero,
+                            minimumSize: const Size(80, 24),
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            alignment: Alignment.center,
+                            backgroundColor: controller.isInCart(info.id)
+                                ? Colors.green
+                                : Colors.transparent),
+                        onPressed: () {
+                          _cartController.addToCart(info.id);
+                        },
+                        child: Text(
+                          (controller.isInCart(info.id)
+                              ? 'Добавить'
+                              : 'В корзину'),
+                          style: const TextStyle(
+                            color: Colors.black,
+                          ),
                         ),
-                      ),
-                    )
-                    // IconButton(
-                    //   padding: EdgeInsets.zero,
-                    //   onPressed: () {
-                    //     print('cart');
-                    //   },
-                    //   icon: Icon(Icons.shopping_cart),
-                    //   iconSize: 30,
-                    // ),
+                      );
+                    })
                   ],
                 ),
               ),

@@ -1,5 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+Widget bigTitle(t) {
+  return Text(t,
+      style: GoogleFonts.arimo(
+        fontSize: 24,
+        fontWeight: FontWeight.w800,
+      ));
+}
+
+Widget bigSubTitle(t) {
+  return Text(t,
+      style: GoogleFonts.arimo(
+        fontSize: 15,
+        color: Colors.grey,
+        fontWeight: FontWeight.w800,
+      ));
+}
+
+Widget bigPrice(t) {
+  return Text(t + ' \u20bd',
+      style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold));
+}
+
+Widget bigWeight(t) {
+  return Text(t + ' г.',
+      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold));
+}
+
+Widget smallPrice(t) {
+  return Text(t + ' \u20bd',
+      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold));
+}
 
 Widget mainTitle(String t) {
   return Padding(
