@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 class ProductInfo {
   int id;
   String title;
@@ -155,6 +157,38 @@ List<ProductInfo> productList = [
 
 List<ProductInfo> allItems = [];
 
+class CartInfo {
+  int id = 0;
+  int count = 0;
+  int price = 0;
+
+  CartInfo(this.id, this.count, this.price);
+}
+
+class CartController extends GetxController {
+  List<CartInfo> cartList = [];
+
+  var totalPrice = 0;
+  var totalCount = 0;
+
+  addToCart(id) {
+    print('add to cart ${id}');
+    int itemIdx = productList.indexWhere((el) => el.id == id);
+    if (itemIdx != -1) {
+      int cartIdx = cartList.indexWhere((el) => el.id == id);
+      if (cartIdx != -1) {
+        cartList[cartIdx].count++;
+        cartList[cartIdx].price = productList[itemIdx].price;
+      } else {
+        cartList.add(new CartInfo(id, 1, productList[itemIdx].price));
+      }
+    }
+    totalPrice = cartList.fold(0, (summ, el) => summ + el.count * el.price);
+    totalCount = cartList.fold(0, (summ, el) => summ + el.count);
+    update();
+  }
+}
+
 bool getIsLiked(id) {
   int item = productList.indexWhere((el) => el.id == id);
   if (item == -1) return false;
@@ -165,4 +199,17 @@ int getLikes(id) {
   int item = productList.indexWhere((el) => el.id == id);
   if (item == -1) return 0;
   return productList[item].likes;
+}
+
+void toggleLike(id) {
+  int item = productList.indexWhere((el) => el.id == id);
+  if (item != -1) {
+    if (productList[item].isLiked) {
+      productList[item].isLiked = false;
+      productList[item].likes--;
+    } else {
+      productList[item].isLiked = true;
+      productList[item].likes++;
+    }
+  }
 }

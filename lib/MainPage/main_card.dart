@@ -1,8 +1,8 @@
-import 'package:demo_app/DetailPage/detail_page.dart';
 import 'package:demo_app/MainPage/like_icon.dart';
 import 'package:demo_app/constants.dart';
 import 'package:demo_app/data.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 const double _outCardSpacing = 8.0;
 const double _inCardSpacing = 8.0;
@@ -76,6 +76,8 @@ class _ProductCard extends StatelessWidget {
   _ProductCard({required this.info, required this.width, Key? key})
       : super(key: key);
 
+  final _cartController = Get.find<CartController>();
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -138,7 +140,7 @@ class _ProductCard extends StatelessWidget {
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           alignment: Alignment.center),
                       onPressed: () {
-                        print('To cadr');
+                        _cartController.addToCart(info.id);
                       },
                       child: Text(
                         'В корзину',

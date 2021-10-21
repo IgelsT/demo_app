@@ -37,6 +37,8 @@ class _LikeIconState extends State<LikeIcon> {
                     padding: EdgeInsets.zero,
                     onPressed: () {
                       print('like');
+                      toggleLike(widget.id);
+                      setState(() {});
                     },
                     iconSize: 20,
                     color: (getIsLiked(widget.id)) ? Colors.red : Colors.white,

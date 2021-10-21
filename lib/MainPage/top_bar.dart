@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:badges/badges.dart';
+import '../data.dart';
 
 class TopBar extends StatelessWidget {
-  const TopBar({Key? key}) : super(key: key);
+  TopBar({Key? key}) : super(key: key);
+  final _cartController = Get.find<CartController>();
 
   @override
   Widget build(BuildContext context) {
@@ -28,21 +32,27 @@ class TopBar extends StatelessWidget {
                 Text('+7 999 555 66 22'),
               ],
             ),
-            Row(
-              children: const [
-                Icon(
-                  Icons.shopping_cart_outlined,
-                  size: 30,
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Text('0 \u20bd'),
-                SizedBox(
-                  width: 10,
-                )
-              ],
-            )
+            GetBuilder<CartController>(builder: (controller) {
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Badge(
+                    badgeContent: Text('${controller.totalCount}'),
+                    child: Icon(
+                      Icons.shopping_cart_outlined,
+                      size: 30,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text('${controller.totalPrice} \u20bd'),
+                  SizedBox(
+                    width: 10,
+                  )
+                ],
+              );
+            }),
           ],
         ),
       ),

@@ -5,6 +5,7 @@ import 'package:demo_app/data.dart';
 // import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'constants.dart';
 
@@ -14,13 +15,16 @@ void main() {
   //   enabled: !kReleaseMode,
   // ));
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
+
+  final cartController = Get.put(CartController());
+
   @override
   Widget build(BuildContext context) {
     return Sizer(builder: (context, orientation, deviceType) {
@@ -120,7 +124,7 @@ class _PageState extends State<Page> {
                 ],
               ),
             ),
-            const TopBar(),
+            TopBar(),
           ],
         ),
       ),
