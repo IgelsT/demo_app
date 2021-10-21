@@ -69,15 +69,6 @@ class _PageState extends State<Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   elevation: 0,
-      //   backgroundColor: Colors.amber,
-      //   // leading: IconButton(
-      //   //   icon: const Icon(Icons.arrow_back_ios),
-      //   //   onPressed: () {},
-      //   // ),
-      //   title: const Text("Hello world"),
-      // ),
       body: SafeArea(
         child: Stack(
           children: [
