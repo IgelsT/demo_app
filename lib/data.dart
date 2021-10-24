@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProductInfo {
@@ -185,9 +186,47 @@ class CartController extends GetxController {
         cartList[cartIdx].count++;
         cartList[cartIdx].price = productList[itemIdx].price;
       } else {
-        cartList.add(new CartInfo(id, 1, productList[itemIdx].price));
+        cartList.add(CartInfo(id, 1, productList[itemIdx].price));
       }
     }
+    updateCart();
+  }
+
+  removeFromCart(id) {
+    int itemIdx = productList.indexWhere((el) => el.id == id);
+    if (itemIdx != -1) {
+      int cartIdx = cartList.indexWhere((el) => el.id == id);
+      if (cartIdx != -1) {
+        if (cartList[cartIdx].count - 1 == 0) {
+          Get.defaultDialog(
+            title: "Удалить из корзины?",
+            middleText: productList[itemIdx].title,
+            textConfirm: "Да",
+            textCancel: "Отмена",
+            barrierDismissible: false,
+            confirm: ElevatedButton(
+                onPressed: () {
+                  cartList.removeAt(cartIdx);
+                  updateCart();
+                  Get.back();
+                },
+                child: const Text("Да")),
+            cancel: ElevatedButton(
+                onPressed: () {
+                  Get.back();
+                },
+                child: const Text("Отмена")),
+          );
+        } else {
+          cartList[cartIdx].count--;
+          cartList[cartIdx].price = productList[itemIdx].price;
+        }
+      }
+    }
+    updateCart();
+  }
+
+  updateCart() {
     totalPrice = cartList.fold(0, (summ, el) => summ + el.count * el.price);
     totalCount = cartList.fold(0, (summ, el) => summ + el.count);
     update();
