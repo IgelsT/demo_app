@@ -14,7 +14,7 @@ class OrderPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MainTemplate(
       body: Container(
-        padding: EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,7 +24,7 @@ class OrderPage extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: () {
-                    globalNav.current_path = '/cart';
+                    globalNav.currentPath = '/cart';
                     Navigator.pop(context);
                   },
                   icon: const Icon(Icons.arrow_back),
@@ -32,12 +32,11 @@ class OrderPage extends StatelessWidget {
                 OutlinedButton(
                   child: const Text('Оформить заказ'),
                   onPressed: () {
-                    print('finish order');
                     if (_formKey.currentState!.validate()) {
                       _cartController.clearCart();
                       Navigator.pop(context);
                       Navigator.pop(context);
-                      globalNav.current_path = "/";
+                      globalNav.currentPath = "/";
                       Get.defaultDialog(
                         title: "Ваш заказ принят!",
                         middleText:
@@ -54,7 +53,11 @@ class OrderPage extends StatelessWidget {
                 ),
               ],
             ),
-            OrderForm(_formKey),
+            Expanded(
+              child: SingleChildScrollView(
+                child: OrderForm(_formKey),
+              ),
+            ),
           ],
         ),
       ),

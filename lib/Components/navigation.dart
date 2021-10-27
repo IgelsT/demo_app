@@ -1,5 +1,5 @@
 class PNav {
-  String current_path = '/';
+  String currentPath = '/';
 }
 
 PNav globalNav = PNav();

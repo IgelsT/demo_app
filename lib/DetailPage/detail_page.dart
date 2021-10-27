@@ -12,7 +12,7 @@ showDetail(id, context) {
     Dialog alert = Dialog(
       insetPadding:
           const EdgeInsets.only(top: 60.0, right: 5.0, bottom: 5.0, left: 5.0),
-      child: new DetailPage(info),
+      child: DetailPage(info),
     );
     showDialog(
       barrierDismissible: false,
@@ -21,6 +21,7 @@ showDetail(id, context) {
         return alert;
       },
     );
+    // ignore: empty_catches
   } catch (e) {}
 }
 
@@ -35,7 +36,7 @@ class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
           Row(

@@ -37,10 +37,8 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// ignore: must_be_immutable
+// ignore: must_be_immutable, use_key_in_widget_constructors
 class Page extends StatefulWidget {
-  Page({Key? key}) : super(key: key);
-
   @override
   State<Page> createState() => _PageState();
 }
@@ -59,8 +57,10 @@ class _PageState extends State<Page> {
   selectTeig(value) {
     setState(() {
       if (value == 0)
+        // ignore: curly_braces_in_flow_control_structures
         _productList = productList;
       else
+        // ignore: curly_braces_in_flow_control_structures
         _productList = productList.where((el) => el.teig == value).toList();
       _teig = [false, false, false];
       _teig[value] = true;

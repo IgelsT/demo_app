@@ -12,13 +12,12 @@ class MainTemplate extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        print('back button');
-        if (globalNav.current_path == '/cart') {
-          globalNav.current_path = '/';
+        if (globalNav.currentPath == '/cart') {
+          globalNav.currentPath = '/';
           return true;
         }
-        if (globalNav.current_path == '/order') {
-          globalNav.current_path = '/cart';
+        if (globalNav.currentPath == '/order') {
+          globalNav.currentPath = '/cart';
           return true;
         }
         return true;

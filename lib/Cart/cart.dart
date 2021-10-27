@@ -17,6 +17,7 @@ class CartPage extends StatelessWidget {
       try {
         ProductInfo item = getProduct(row.id);
         _list.add(CartRow(row, item));
+        // ignore: empty_catches
       } catch (e) {}
     }
     return _list;
@@ -35,7 +36,7 @@ class CartPage extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: () {
-                    globalNav.current_path = '/';
+                    globalNav.currentPath = '/';
                     Navigator.pop(context);
                   },
                   icon: const Icon(Icons.arrow_back),
@@ -44,8 +45,8 @@ class CartPage extends StatelessWidget {
                   child: const Text('Оформить заказ'),
                   onPressed: () {
                     if (_cartController.totalCount != 0) {
-                      if (globalNav.current_path == '/cart') {
-                        globalNav.current_path = '/order';
+                      if (globalNav.currentPath == '/cart') {
+                        globalNav.currentPath = '/order';
                         Navigator.push(
                             context,
                             MaterialPageRoute(

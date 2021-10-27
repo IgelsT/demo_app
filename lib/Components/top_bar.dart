@@ -5,9 +5,9 @@ import 'package:get/get.dart';
 import 'package:badges/badges.dart';
 import '../data.dart';
 
+// ignore: use_key_in_widget_constructors
 class TopBar extends StatelessWidget {
-  TopBar({Key? key}) : super(key: key);
-  final _cartController = Get.find<CartController>();
+  // final _cartController = Get.find<CartController>();
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +42,8 @@ class TopBar extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                if (globalNav.current_path == '/') {
-                  globalNav.current_path = '/cart';
+                if (globalNav.currentPath == '/') {
+                  globalNav.currentPath = '/cart';
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => CartPage()));
                 }
