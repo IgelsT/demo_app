@@ -226,6 +226,14 @@ class CartController extends GetxController {
     updateCart();
   }
 
+  clearCart() {
+    cartList = [];
+    totalPrice = 0;
+    totalCount = 0;
+
+    updateCart();
+  }
+
   updateCart() {
     totalPrice = cartList.fold(0, (summ, el) => summ + el.count * el.price);
     totalCount = cartList.fold(0, (summ, el) => summ + el.count);

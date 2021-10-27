@@ -1,23 +1,119 @@
 import 'package:demo_app/Components/main_template.dart';
 import 'package:demo_app/Components/navigation.dart';
+import 'package:demo_app/data.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class OrderPage extends StatelessWidget {
-  const OrderPage({Key? key}) : super(key: key);
+  OrderPage({Key? key}) : super(key: key);
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _cartController = Get.find<CartController>();
 
   @override
   Widget build(BuildContext context) {
     return MainTemplate(
-      body: Column(
-        children: [
-          IconButton(
-            onPressed: () {
-              globalNav.current_path = '/cart';
-              Navigator.pop(context);
+      body: Container(
+        padding: EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    globalNav.current_path = '/cart';
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(Icons.arrow_back),
+                ),
+                OutlinedButton(
+                  child: const Text('Оформить заказ'),
+                  onPressed: () {
+                    print('finish order');
+                    if (_formKey.currentState!.validate()) {
+                      _cartController.clearCart();
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                      globalNav.current_path = "/";
+                      Get.defaultDialog(
+                        title: "Ваш заказ принят!",
+                        middleText:
+                            "Спасибо за заказ. Ожидайте звонка менеджера, для подтверждения.",
+                        barrierDismissible: true,
+                        confirm: ElevatedButton(
+                            onPressed: () {
+                              Get.back();
+                            },
+                            child: const Text("ОК")),
+                      );
+                    }
+                  },
+                ),
+              ],
+            ),
+            OrderForm(_formKey),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ignore: must_be_immutable
+class OrderForm extends StatefulWidget {
+  OrderForm(this.formKey, {Key? key}) : super(key: key);
+
+  GlobalKey<FormState> formKey;
+
+  @override
+  _OrderFormState createState() => _OrderFormState();
+}
+
+class _OrderFormState extends State<OrderForm> {
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: widget.formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          TextFormField(
+            decoration: const InputDecoration(
+              hintText: 'Имя',
+            ),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return 'Поле обязательно!';
+              }
+              return null;
             },
-            icon: const Icon(Icons.arrow_back),
           ),
-          Text('Order'),
+          TextFormField(
+            decoration: const InputDecoration(
+              hintText: 'Телефон',
+            ),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return 'Поле обязательно!';
+              }
+              return null;
+            },
+          ),
+          TextFormField(
+            decoration: const InputDecoration(
+              hintText: 'Адрес',
+            ),
+            maxLines: 6,
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return 'Поле обязательно!';
+              }
+              return null;
+            },
+          ),
         ],
       ),
     );
