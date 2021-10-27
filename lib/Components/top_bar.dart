@@ -1,4 +1,5 @@
 import 'package:demo_app/Cart/cart.dart';
+import 'package:demo_app/Components/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:badges/badges.dart';
@@ -41,36 +42,42 @@ class TopBar extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const CartPage()));
+                if (globalNav.current_path == '/') {
+                  globalNav.current_path = '/cart';
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => CartPage()));
+                }
               },
               child: GetBuilder<CartController>(builder: (controller) {
-                return Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Badge(
-                      badgeContent: Text(
-                        '${controller.totalCount}',
-                        style: const TextStyle(fontSize: 10),
+                return Container(
+                  color: Colors.transparent,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Badge(
+                        badgeContent: Text(
+                          '${controller.totalCount}',
+                          style: const TextStyle(fontSize: 10),
+                        ),
+                        child: Icon(
+                          (controller.totalCount == 0)
+                              ? Icons.shopping_cart_outlined
+                              : Icons.shopping_cart,
+                          size: 36,
+                        ),
                       ),
-                      child: Icon(
-                        (controller.totalCount == 0)
-                            ? Icons.shopping_cart_outlined
-                            : Icons.shopping_cart,
-                        size: 36,
+                      const SizedBox(
+                        width: 5,
                       ),
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      '${controller.totalPrice} \u20bd',
-                      style: const TextStyle(fontSize: 18),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    )
-                  ],
+                      Text(
+                        '${controller.totalPrice} \u20bd',
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      )
+                    ],
+                  ),
                 );
               }),
             ),

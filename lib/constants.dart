@@ -48,6 +48,17 @@ Widget mainTitle(String t) {
   );
 }
 
+Widget mainTitleLeft(String t) {
+  return Text(
+    t,
+    textAlign: TextAlign.left,
+    style: GoogleFonts.arimo(
+      fontSize: 15,
+      fontWeight: FontWeight.w800,
+    ),
+  );
+}
+
 Widget smallTitle(String t) {
   return Text(
     t,

@@ -1,7 +1,6 @@
 import 'package:demo_app/Components/main_template.dart';
 import 'package:demo_app/MainPage/main_card.dart';
 import 'package:demo_app/MainPage/popular.dart';
-import 'package:demo_app/Components/top_bar.dart';
 import 'package:demo_app/data.dart';
 // import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
@@ -29,7 +28,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Sizer(builder: (context, orientation, deviceType) {
-      return MaterialApp(
+      return GetMaterialApp(
+        enableLog: false,
         debugShowCheckedModeBanner: false,
         home: Page(),
       );
